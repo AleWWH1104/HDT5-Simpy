@@ -54,12 +54,19 @@ class Proceso:
                     yield req
         # Retorna la memoria utilizada.
         yield self.ram.put(self.memoria)
-        
 
+def crear_proceso(env, ram, cpu, num_procesos):
+    for i in range(num_procesos):
+        proceso = Proceso(f"Proceso {i}", env, ram, cpu)
+        env.process(proceso.ejecutar())
+        lista_procesos.append(proceso)
+        
 # Configuración de la simulación
 env = simpy.Environment()
 ram = simpy.Container(env, init=40, capacity=40)
 cpu = simpy.Resource(env, capacity=1)
 
+crear_proceso(env, ram, cpu, num_procesos)
+env.run()
 
 
