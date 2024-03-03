@@ -4,7 +4,7 @@ import csv
 
 # Parámetros de la simulación
 intervalo = 10
-num_procesos = 20
+num_procesos = 25
 num_instrucciones = 3
 random.seed(11)
 lista_procesos = []
@@ -28,9 +28,9 @@ class Proceso:
         while self.instrucciones > 0: 
             # Solicita CPU
             with self.cpu.request() as req:
+                yield req
                 if self.hora_inicio == None:
                     self.hora_inicio = self.env.now
-                yield req
                 # Ejecuta sus instrucciones
                 print(f"{self.env.now} [RUNNING] {self.name}, ejecutando hasta {num_instrucciones} instrucciones.")
                 # Espera unidad de tiempo procesador
@@ -63,10 +63,27 @@ def crear_proceso(env, ram, cpu, num_procesos):
         
 # Configuración de la simulación
 env = simpy.Environment()
-ram = simpy.Container(env, init=40, capacity=40)
+ram = simpy.Container(env, init=100, capacity=100)
 cpu = simpy.Resource(env, capacity=1)
 
 crear_proceso(env, ram, cpu, num_procesos)
 env.run()
+
+# Crear y escribir en un archivo CSV
+nombre_archivo = 'procesos.csv'
+
+with open(nombre_archivo, mode='w', newline='') as file:
+    writer = csv.writer(file)
+
+    # Escribir encabezados
+    writer.writerow(['Proceso', 'Hora de inicio', 'Hora de fin', 'Duración'])
+
+    # Iterar sobre los procesos y escribir los datos
+    for proceso in lista_procesos:
+        duracion = proceso.hora_fin - proceso.hora_inicio
+        writer.writerow([proceso.name, proceso.hora_inicio, proceso.hora_fin, duracion])
+
+print(f"Los datos se han exportado en '{nombre_archivo}'")
+
 
 

@@ -1,0 +1,26 @@
+Proceso,Hora de inicio,Hora de fin,Duración
+Proceso 0,0,380,380
+Proceso 1,5,381,376
+Proceso 2,13,382,369
+Proceso 3,15,141,126
+Proceso 4,21,384,363
+Proceso 5,27,463,436
+Proceso 6,47,48,1
+Proceso 7,48,198,150
+Proceso 8,51,52,1
+Proceso 9,52,53,1
+Proceso 10,53,411,358
+Proceso 11,60,466,406
+Proceso 12,66,467,401
+Proceso 13,82,419,337
+Proceso 14,87,88,1
+Proceso 15,88,375,287
+Proceso 16,93,469,376
+Proceso 17,108,441,333
+Proceso 18,191,464,273
+Proceso 19,198,406,208
+Proceso 20,200,407,207
+Proceso 21,247,465,218
+Proceso 22,382,383,1
+Proceso 23,419,468,49
+Proceso 24,441,481,40
