@@ -36,6 +36,24 @@ class Proceso:
                 # Espera unidad de tiempo procesador
                 yield self.env.timeout(1)
                 self.instrucciones -= num_instrucciones  # Reducir las instrucciones restantes
+                # Pasa a IO o termina
+                if self.instrucciones <= 0:
+                    # Tiempo de fin
+                    self.hora_fin = self.env.now
+                    print(f"{self.env.now} [TERMINATED] {self.name} terminado.")
+                    cpu.release(req)
+                    break
+                else:
+                    random_num = random.randint(1, 2)
+                    if random_num == 1:
+                        # Espera en IO
+                        print(f"{self.env.now} [WAITING] {self.name} -> Haciendo operaciones de I/O.")     
+                    # Regresa a la cola de CPU esperando tiempo de llegada de proceso
+                    yield env.timeout(round(random.expovariate(1/intervalo)), 1)
+                    print(f"{self.env.now} [READY] {self.name} -> instrucciones pendientes {self.instrucciones}.")
+                    yield req
+        # Retorna la memoria utilizada.
+        yield self.ram.put(self.memoria)
         
 
 # Configuración de la simulación
