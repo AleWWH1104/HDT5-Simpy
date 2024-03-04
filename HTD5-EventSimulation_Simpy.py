@@ -3,9 +3,9 @@ import simpy
 import csv
 
 # Parámetros de la simulación
-intervalo = 10
-num_procesos = 200
-num_instrucciones = 3
+intervalo = 1
+num_procesos = 25
+num_instrucciones = 6
 random.seed(44)
 lista_procesos = []
 
@@ -64,7 +64,7 @@ def crear_proceso(env, ram, cpu, num_procesos):
 # Configuración de la simulación
 env = simpy.Environment()
 ram = simpy.Container(env, init=100, capacity=100)
-cpu = simpy.Resource(env, capacity=1)
+cpu = simpy.Resource(env, capacity=2)
 
 crear_proceso(env, ram, cpu, num_procesos)
 env.run()
